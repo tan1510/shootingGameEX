@@ -2,26 +2,35 @@ package Ballet;
 import java.util.ArrayList;
 
 import densan.s.game.drawing.Drawer;
+import densan.s.game.object.GameObjectBase;
 
 /**
  * 弾のリストを保持するクラス singleton
  * @author tachibana
  *
  */
-public class BalletManager {
+public class PlayerBalletManager <T extends Ballet>{
 /**
  * クラスを読み込んだ際にオブジェクトの生成をする
  */
-	private static final BalletManager balletManager = new BalletManager();
+	private static final PlayerBalletManager balletManager = new PlayerBalletManager();
 	/**
 	 * 弾のリスト
 	 */
-	private static ArrayList<StraightBallet> balletlist;
+	private static ArrayList<Ballet> balletlist;
+	/**
+	 * 画面サイズ
+	 */
+	private static final int MaxX =640;
+	/**
+	 * 画面サイズ
+	 */
+	private static final int MaxY =480;
 	/**
 	 * コンストラクタ 最初の一回のみ実行 private
 	 */
-	private BalletManager(){
-		balletlist = new ArrayList<StraightBallet>();
+	private PlayerBalletManager(){
+		balletlist = new ArrayList<Ballet>();
 	}
 	/**
 	 * リストにバレットを追加
@@ -34,10 +43,11 @@ public class BalletManager {
 	 * update balletlistをupdateする
 	 */
 	public void update(){
-		for(StraightBallet b: balletlist){
+		for(Ballet b: balletlist){
 			//x=640,y=480 弾の座標判定
-			if(b.getX()<0||b.getX()>640||b.getY()<0||b.getY()<480)
 			b.update();
+			if(b.getX()<0||b.getX()>MaxX||b.getY()<0||b.getY()<MaxY)
+			b.remove();
 		}
 	}
 	/**
@@ -45,7 +55,7 @@ public class BalletManager {
 	 * @param d
 	 */
 	public void draw(Drawer d){
-		for(StraightBallet b: balletlist){
+		for(Ballet b: balletlist){
 			b.draw(d);
 		}
 	}
@@ -53,7 +63,7 @@ public class BalletManager {
 	 * getInstance
 	 * @return
 	 */
-	public static BalletManager getInstance(){
+	public static PlayerBalletManager getInstance(){
 		return balletManager;
 	}
 	/**
@@ -63,6 +73,14 @@ public class BalletManager {
 	//	for(Ballet listInBallet:balletlist){
 				while(balletlist.remove(b));
 		}
+	/**
+	 * 
+	 * @return
+	 */
+	public ArrayList<Ballet> getList(){
+		return balletlist;
+		
+	}
 	
 	
 }

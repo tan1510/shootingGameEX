@@ -1,5 +1,5 @@
 package Ballet;
 
-public class HomingShot implements Ballet {
+public class HomingShot extends {
 
 }

@@ -1,6 +1,6 @@
 package shootAction;
 import Ballet.StraightBallet;
-import Ballet.BalletManager;
+import Ballet.PlayerBalletManager;
 import densan.s.game.object.GameObjectBase;
 
 /**
@@ -16,11 +16,11 @@ public class StraightShoot implements ShootAction{
 	/**
 	 * 弾のマネージャー
 	 */
-	private BalletManager balletManager;
+	private PlayerBalletManager balletManager;
 	
 	public StraightShoot(GameObjectBase o){
 		this.o=o;
-		balletManager=BalletManager.getInstance();
+		balletManager=PlayerBalletManager.getInstance();
 		
 	}
 	/**
@@ -29,8 +29,8 @@ public class StraightShoot implements ShootAction{
 	 * @param deg 
 	 */
 	@Override
-	public void shoot( double length, double deg) {
-				balletManager.balletAdd(new StraightBallet(o.getCenterX(),o.getCenterY(),length,deg));	
+	public void shoot() {
+				balletManager.balletAdd(new StraightBallet(o.getCenterX(),o.getCenterY()));	
 	}
 
 }

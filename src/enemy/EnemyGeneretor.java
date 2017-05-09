@@ -6,4 +6,7 @@ package enemy;
  */
 public interface EnemyGeneretor {
 
+	
+	public void update();
+
 }

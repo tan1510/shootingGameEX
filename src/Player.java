@@ -16,19 +16,37 @@ public class Player extends GameObjectBase {
  /**
   * 移動スピード
   */
-	public static final int SPEED = 2;
+	private int SPEED = 2;
+	/**
+	 * playerの横サイズ
+	 */
+	private static int width =50;
+	/**
+	 * playerの縦サイズ
+	 */
+	private static int height = 50;
 	/**
 	 * State　射撃タイプの保持およびstraightShootで初期化
 	 */
 	private ShootAction shootAction = new StraightShoot(this);
+	
+	private static Player player  = new Player();
+	/**
+	 * getInsatance
+	 * @return
+	 */
+	public static Player getInstance(){
+		return player;
+	}
  /**
   * コンストラクタ　
   * ShootActionの初期化
   */
-	public Player() {
-		super(100, 100, 50, 50);
+	private Player() {
+		super(100, 100, width, height);
 		
 	}
+	private int waitTime=10;
  /**
   * update
   */
@@ -47,8 +65,12 @@ public class Player extends GameObjectBase {
 		if (KeyInput.isPressing(KeyEvent.VK_LEFT)) {
 			addX(-SPEED);
 		}
-		if(KeyInput.isPressing(KeyEvent.VK_Z)){	
-			getShoottype().shoot(50,0); //射撃
+		if(KeyInput.isPressing(KeyEvent.VK_Z)){
+			if(waitTime>10){
+			shootAction.shoot(); //射撃
+			waitTime=0;
+			}
+			waitTime++;
 		}
 	}
  

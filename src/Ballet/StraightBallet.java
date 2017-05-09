@@ -9,7 +9,7 @@ import densan.s.game.object.GameObjectBase;
  * @author tachibana
  *
  */
-public class StraightBallet extends GameObjectBase implements Ballet{
+public class StraightBallet extends Ballet {
 
 	/**
 	 * xベクトル とりあえず初期値10
@@ -24,19 +24,24 @@ public class StraightBallet extends GameObjectBase implements Ballet{
 	 */
 	private boolean playerBallet = true;
 	/**
-	 * 弾
+	 * 弾の威力 
+	 */
+	private int power = 1;
+	
+	/**
+	 * 弾コンストラクタ
 	 * @param x x座標
 	 * @param y y座標
 	 * @param length 半径
 	 * @param deg  角度
 	 */
-	public StraightBallet(double x, double y, double length, double deg) {
+	public StraightBallet(double x, double y) {
 		// TODO 自動生成されたコンストラクター・スタブ
 		super(x, y, 10,10 );
 		//ベクトル設定
 		//xVector =length * Math.cos(Math.toRadians(deg));
 	//	yVector =length * length * Math.cos(Math.toRadians(deg));
-		this.setVector(length, deg);
+		this.setVector(20, 0);
 	}
 
 	@Override
@@ -53,7 +58,11 @@ public class StraightBallet extends GameObjectBase implements Ballet{
 		d.setColor(Color.BLACK);
 		d.fillCircle(this.getX(), this.getY(),2);
 	}
-	
-	
+	/**
+	 * 威力のゲッター
+	 */
+	public int getPower(){
+		return power;
+	}
 
 }

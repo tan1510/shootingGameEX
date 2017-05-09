@@ -1,0 +1,18 @@
+
+{
+    "ENEMY_LIST1":
+    
+    [
+            {"TIME":1,"xp":100,"yp":100,"mt":0,"ENEMY_TYPE":0},
+            {"TIME":500,"xp":200,"yp":200,"mt":0,"ENEMY_TYPE":0},
+            {"TIME":1000,"xp":230,"yp":230,"mt":0,"ENEMY_TYPE":0},
+            {"TIME":200,"xp":250,"yp":250,"mt":0,"ENEMY_TYPE":0}
+    ],
+    "ENEMY_LIST2":
+    [
+        {"TIME":1,"xp":100,"yp":100,"mt":0,"ENEMY_TYPE":0},
+        {"TIME":10,"xp":100,"yp":130,"mt":0,"ENEMY_TYPE":0},
+        {"TIME":15,"xp":150,"yp":150,"mt":0,"ENEMY_TYPE":0},
+        {"TIME":30,"xp":200,"yp":200,"mt":0,"ENEMY_TYPE":0}
+    ]
+}
