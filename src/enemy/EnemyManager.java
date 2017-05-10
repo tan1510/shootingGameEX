@@ -97,6 +97,8 @@ public class EnemyManager <T extends Enemy>{
 			}
 		}	
 	}
+	
+	
 	/**
 	 * ゲッター
 	 * @return

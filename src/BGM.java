@@ -13,7 +13,7 @@ public class BGM {
 	
 	public BGM(){
 		try {
-			url = new URL();
+			url = new URL("/resources/BGM/");
 		}catch (MalformedURLException ex) {
 			System.err.println(ex);
 		}

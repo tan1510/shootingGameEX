@@ -18,11 +18,7 @@ public abstract class Enemy extends GameObjectBase{
 	}
 
 	@Override
-	public void draw(Drawer d) {
-		// TODO 自動生成されたメソッド・スタブ
-		d.setColor(Color.RED);
-		d.fillRect(getX(), getY(), getWidth(), getHeight());
-	}
+	public abstract void draw(Drawer d);
 	/**
 	 * hpを減らし、hpが0以下になった場合aliveフラグを消去
 	 * @param damage

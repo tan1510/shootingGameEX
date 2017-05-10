@@ -32,5 +32,4 @@ public class StraightShoot implements ShootAction{
 	public void shoot() {
 				balletManager.balletAdd(new StraightBallet(o.getCenterX(),o.getCenterY()));	
 	}
-
 }

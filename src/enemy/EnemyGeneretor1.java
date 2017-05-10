@@ -1,6 +1,9 @@
 package enemy;
 
 import java.util.List;
+//横 640
+//縦 480
+//
 /**
  * stage1のエネミーを生成する
  * @author tachibana
@@ -8,7 +11,10 @@ import java.util.List;
  * @param <T>
  */
 public class EnemyGeneretor1<T extends Enemy> implements EnemyGeneretor{
-	private List<T> manager = EnemyManager.getInstance().getList();
+	/**
+	 * エネミーマネージャーへの参照
+	 */
+	private List<Enemy> manager = EnemyManager.getInstance().getList();
 	
 	public EnemyGeneretor1(){
 	}
@@ -16,7 +22,9 @@ public class EnemyGeneretor1<T extends Enemy> implements EnemyGeneretor{
 	public void update(int time){
 		switch(time){
 		case 0: 
-			EnemyManager.getInstance().addEnemy(new Enemy_BallType1(400, 400));
+		
+			
+			
 			
 		
 		}
@@ -33,9 +41,15 @@ public class EnemyGeneretor1<T extends Enemy> implements EnemyGeneretor{
 		// TODO 自動生成されたメソッド・スタブ
 		switch(time){
 		case 0: 
-			EnemyManager.getInstance().addEnemy(new Enemy_BallType1(400, 400));
-		time++;
+			manager.add(new Enemy_BallType1(600, 400));
+			manager.add(new Enemy_BallType1(600, 300));
+			manager.add(new Enemy_BallType1(600, 200));
+			manager.add(new Enemy_BallType1(600, 100));
+			
+		default:
+			break;
 	}
+		time++;
 	}
 	
 }

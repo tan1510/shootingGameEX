@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import Ballet.PlayerBalletManager;
+import Player.Player;
 import densan.s.game.drawing.Drawer;
 import densan.s.game.manager.Updatable;
 import enemy.Enemy;
@@ -91,12 +92,13 @@ public class Game implements Updatable {
 	}
 /**
  * privateメソッド　このメソッドはEnemyManagerに実装を移動することを要検討
+ * 使用不可
  * @param time
  */
 	private void generete(int time) {
 	//	ArrayList<Enemy> list = new ArrayList<Enemy>();
 	//	list = generater.getGenereteEnemyList(time, 1);
-		generater.GenereteEnemy(time, 1);
+	//	generater.GenereteEnemy(time, 1);
 		
 	}
 
