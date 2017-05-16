@@ -1,6 +1,9 @@
 package Ballet;
 import java.util.ArrayList;
+import java.util.Iterator;
 
+import Player.Player;
+import densan.s.game.calc.Calc;
 import densan.s.game.drawing.Drawer;
 import densan.s.game.object.GameObjectBase;
 
@@ -19,13 +22,14 @@ public class PlayerBalletManager <T extends Ballet>{
 	 */
 	private static ArrayList<Ballet> balletlist;
 	/**
-	 * 画面サイズ
+	 * 横方向の画面サイズ
 	 */
 	private static final int MaxX =640;
 	/**
-	 * 画面サイズ
+	 * 縦方向の画面サイズ
 	 */
 	private static final int MaxY =480;
+
 	/**
 	 * コンストラクタ 最初の一回のみ実行 private
 	 */
@@ -40,16 +44,30 @@ public class PlayerBalletManager <T extends Ballet>{
 		balletlist.add(addBallet);
 	}
 	/**
-	 * update balletlistをupdateする
+	 *リスト全てのオブジェクト(Ballet)
+	 * にupdateを実行しリムーブフラグが立っていればiteratorのremoveを実行
 	 */
 	public void update(){
-		for(Ballet b: balletlist){
+		Iterator<Ballet> itr = balletlist.iterator();
+		Ballet b;
+		
+		
+		while(itr.hasNext()){
 			//x=640,y=480 弾の座標判定
+			b =itr.next();
 			b.update();
-			if(b.getX()<0||b.getX()>MaxX||b.getY()<0||b.getY()<MaxY)
-			b.remove();
+
+			if(b.getX()<0||b.getX()>MaxX||b.getY()<0||b.getY()>MaxY)//弾が画面外にあるかの判定
+				b.remove();
+		
+			
+			if(b.isRemove())//removeフラグ
+				itr.remove();
 		}
 	}
+	
+	
+	
 	/**
 	 * balletlist全てにdrawする
 	 * @param d
@@ -59,20 +77,26 @@ public class PlayerBalletManager <T extends Ballet>{
 			b.draw(d);
 		}
 	}
+	
+	
 	/**
 	 * getInstance
 	 * @return
 	 */
+	@SuppressWarnings("rawtypes")
 	public static PlayerBalletManager getInstance(){
 		return balletManager;
 	}
+	
+	
 	/**
 	 * オブジェクトの消去
 	 */
-	public void delete(Ballet b){
-	//	for(Ballet listInBallet:balletlist){
-				while(balletlist.remove(b));
+	public void listClear(){
+	//	for(Ballet listInBallet:balletli
+		balletlist.clear();
 		}
+	
 	/**
 	 * 
 	 * @return

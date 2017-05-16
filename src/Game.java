@@ -3,12 +3,13 @@ import java.util.ArrayList;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
+import Ballet.EnemyBalletManager;
 import Ballet.PlayerBalletManager;
 import Player.Player;
 import densan.s.game.drawing.Drawer;
 import densan.s.game.manager.Updatable;
 import enemy.Enemy;
-import enemy.EnemyGeneretor;
+import enemy.StageConstoracter;
 import enemy.EnemyGeneretor1;
 //import enemy.EnemyGeneretorByTime;
 import enemy.EnemyManager;
@@ -27,7 +28,11 @@ public class Game implements Updatable {
 	/**
 	 * balletManagerのフィールド
 	 */
-	private PlayerBalletManager balletManager;
+	private PlayerBalletManager balletManager_p;
+	/**
+	 * 
+	 */
+	private EnemyBalletManager balletManager_e;
 	/**
 	 * EnemyManagerのフィールド
 	 */
@@ -39,7 +44,7 @@ public class Game implements Updatable {
 	/**
 	 * エネミージェネレーター
 	 */
-	private EnemyGeneretor eg;
+	private StageConstoracter eg;
 	/**
 	 * ステージナンバーを保持
 	 */
@@ -48,12 +53,14 @@ public class Game implements Updatable {
 	 * BGMプレイヤー
 	 */
 	private BGM bgm;
+	
 	/**
 	 * コンストラクタ
 	 */
 	public Game(){
 		player=Player.getInstance();
-		balletManager = PlayerBalletManager.getInstance();
+		balletManager_p = PlayerBalletManager.getInstance();
+		balletManager_e = EnemyBalletManager.getInstance();
 		enemyManager = EnemyManager.getInstance();
 		switch(stageNum){
 			case 1:
@@ -83,12 +90,13 @@ public class Game implements Updatable {
 	@Override
 	public void update() {
 		// TODO 自動生成されたメソッド・スタブ
-		t++;
+		//t++;
 		player.update();
-		balletManager.update();
+		balletManager_p.update();
+		balletManager_e.update();
 		enemyManager.update();
-	//	generete(t);
 		eg.update();
+		
 	}
 /**
  * privateメソッド　このメソッドはEnemyManagerに実装を移動することを要検討
@@ -105,8 +113,10 @@ public class Game implements Updatable {
 	@Override
 	public void draw(Drawer d) {
 		// TODO 自動生成されたメソッド・スタブ
+		eg.draw(d);
 		player.draw(d);
-		balletManager.draw(d);
+		balletManager_p.draw(d);
+		balletManager_e.draw(d);
 		enemyManager.draw(d);
 	}
 

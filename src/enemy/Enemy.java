@@ -6,7 +6,7 @@ import densan.s.game.object.GameObjectBase;
 
 
 public abstract class Enemy extends GameObjectBase{
-	private int hp = 3;
+	
 /**
  * コンストラクタ
  * @param x　double x座標
@@ -23,13 +23,7 @@ public abstract class Enemy extends GameObjectBase{
 	 * hpを減らし、hpが0以下になった場合aliveフラグを消去
 	 * @param damage
 	 */
-	public void getDamage(int damage){
-		hp-=damage;
-		if(hp<0){
-		this.remove();//aliveフラグをfalseにする
-		System.out.println("dameged");
-		}
-	}
+	public abstract void getDamage(int damage);
 	/**
 	 * 射撃アクション
 	 * 

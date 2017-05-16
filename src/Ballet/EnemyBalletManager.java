@@ -1,7 +1,10 @@
 package Ballet;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
+import Player.Player;
+import densan.s.game.calc.Calc;
 import densan.s.game.drawing.Drawer;
 
 public class EnemyBalletManager <T extends Ballet>{
@@ -22,6 +25,10 @@ public class EnemyBalletManager <T extends Ballet>{
 		 */
 		private static final int MaxY =480;
 		/**
+		 * プレイヤーへの参照
+		 */
+		private static final Player player = Player.getInstance();
+		/**
 		 * コンストラクタ 最初の一回のみ実行 private
 		 */
 		private EnemyBalletManager(){
@@ -38,13 +45,20 @@ public class EnemyBalletManager <T extends Ballet>{
 		 * update balletlistをupdateする
 		 */
 		public void update(){
-			for(Ballet b: balletlist){
-				//x=640,y=480 弾の座標判定
-				b.update();
-				if(b.getX()<0||b.getX()>MaxX||b.getY()<0||b.getY()<MaxY)
+		Iterator<Ballet> itr = balletlist.iterator();
+		Ballet b;
+		//balletListループ
+		while(itr.hasNext()){
+			b = itr.next();
+			b.update();
+			if(b.getX()<0||b.getX()>MaxX||b.getY()<0||b.getY()<MaxY)
 				b.remove();
+			if(Calc.collisionCircleDetection(b, player)){
+			b.remove();
+			player.damage();
 			}
 		}
+			}
 		/**
 		 * balletlist全てにdrawする
 		 * @param d
@@ -67,7 +81,7 @@ public class EnemyBalletManager <T extends Ballet>{
 		public void delete(Ballet b){
 		//	for(Ballet listInBallet:balletlist){
 					while(balletlist.remove(b));
-			}
+		}
 		/**
 		 * 
 		 * @return

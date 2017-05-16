@@ -10,6 +10,11 @@ import densan.s.game.object.GameObjectBase;
  */
 public class StraightShoot implements ShootAction{
 	/**
+	 * 次弾発射までのインターバル
+	 */
+	private static final int waitTime = 10; 
+	
+	/**
 	 * ShootActionをもつGameObjectへのアクセス
 	 */
 	private GameObjectBase o;
@@ -31,5 +36,11 @@ public class StraightShoot implements ShootAction{
 	@Override
 	public void shoot() {
 				balletManager.balletAdd(new StraightBallet(o.getCenterX(),o.getCenterY()));	
+	}
+	@Override
+	public int getWaitTime() {
+		// TODO 自動生成されたメソッド・スタブ
+		return waitTime;
+		
 	}
 }

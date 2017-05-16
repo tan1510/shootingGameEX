@@ -1,7 +1,9 @@
 package Ballet;
 import java.awt.Color;
+import java.awt.Image;
 
 import densan.s.game.drawing.Drawer;
+import densan.s.game.image.ImageLoader;
 import densan.s.game.object.GameObjectBase;
 
 /**
@@ -28,6 +30,7 @@ public class StraightBallet extends Ballet {
 	 */
 	private int power = 1;
 	
+	private final static Image image = ImageLoader.load("image/ballet1.png");
 	/**
 	 * 弾コンストラクタ
 	 * @param x x座標
@@ -55,8 +58,9 @@ public class StraightBallet extends Ballet {
 	@Override
 	public void draw(Drawer d) {
 		// TODO 自動生成されたメソッド・スタブ
-		d.setColor(Color.BLACK);
-		d.fillCircle(this.getX(), this.getY(),2);
+		d.drawImage(image, getX()-5, getY()-5);
+	//	d.setColor(Color.BLACK);
+		//d.fillCircle(this.getX(), this.getY(),2);
 	}
 	/**
 	 * 威力のゲッター
