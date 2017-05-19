@@ -11,7 +11,7 @@ import densan.s.game.drawing.Drawer;
  * @author tachibana
  *
  */
-public class EnemyHomingBallet extends Ballet {
+public class EnemyStraightBallet extends Ballet {
 
 	
 	/**
@@ -27,7 +27,7 @@ public class EnemyHomingBallet extends Ballet {
  * @param x
  * @param y
  */
-	public EnemyHomingBallet(double x, double y) {
+	public EnemyStraightBallet(double x, double y) {
 		super(x,y,RENGE,RENGE);
 		// TODO 自動生成されたコンストラクター・スタブ
 		double rad= Calc.getRadian(this,Player.getInstance());
@@ -35,7 +35,7 @@ public class EnemyHomingBallet extends Ballet {
 	}
 
 	
-	public EnemyHomingBallet(double x,double y,double rad) {
+	public EnemyStraightBallet(double x,double y,double rad) {
 		// TODO 自動生成されたコンストラクター・スタブ
 		super(x,y,RENGE,RENGE);
 		this.setVector(SPEED,rad);

@@ -77,7 +77,7 @@ public class EnemyManager <T extends Enemy>{
 			e = itr.next();
 			e.update();
 			
-			if(e.getMaxX()<0||e.getX()>640)
+			if(e.getMaxX()<0)
 				e.remove();
 			Iterator<Ballet> itrb = PlayerBalletManager.getInstance().getList().iterator();
 			Ballet b;
@@ -85,7 +85,7 @@ public class EnemyManager <T extends Enemy>{
 				b = itrb.next();
 				//double eX = e.getX(),eY=e.getY(),bX=b.getX(),bY=b.getY();
 			
-				if(Calc.collisionCircleDetection(b, e)){
+				if(Calc.collisionDetection(b, e)){
 				e.getDamage(b.getPower());
 				b.remove();
 				}

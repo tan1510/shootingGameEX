@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import densan.s.game.drawing.Drawer;
 import Ballet.Ballet;
 import Ballet.EnemyBalletManager;
-import Ballet.EnemyHomingBallet;
+import Ballet.EnemyStraightBallet;
 import Ballet.PlayerBalletManager;
 /**
  * ボール型の敵
@@ -34,11 +34,11 @@ public class Enemy_BallType1 extends Enemy{
 		setVector(2,Math.PI);
 	}
 	public void getDamage(int damage){
-	HP-=damage;
-	System.out.println("dameged");
-	if(HP<0){
-	this.remove();//aliveフラグをfalseにす
-	}
+		HP-=damage;
+		System.out.println("dameged");
+		if(HP<0){
+		this.remove();//aliveフラグをfalseにす
+		}
 	}
 	
 	private int time = 0;
@@ -54,7 +54,7 @@ public class Enemy_BallType1 extends Enemy{
 	}
 
 	public void shoot(){
-	list.add(new EnemyHomingBallet(getX(),getY()));
+	list.add(new EnemyStraightBallet(getX(),getY()));
 	}
 
 	@Override

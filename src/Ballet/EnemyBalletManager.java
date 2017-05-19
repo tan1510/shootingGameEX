@@ -36,10 +36,10 @@ public class EnemyBalletManager <T extends Ballet>{
 		}
 		/**
 		 * リストにバレットを追加
-		 * @param addBallet
+		 * @param balletObject
 		 */
-		public void balletAdd(StraightBallet addBallet){
-			balletlist.add(addBallet);
+		public void balletAdd(Ballet balletObject){
+			balletlist.add(balletObject);
 		}
 		/**
 		 * update balletlistをupdateする

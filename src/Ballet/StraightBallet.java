@@ -38,9 +38,10 @@ public class StraightBallet extends Ballet {
 	 * @param length 半径
 	 * @param deg  角度
 	 */
-	public StraightBallet(double x, double y) {
+	public StraightBallet(double x, double y,int power) {
 		// TODO 自動生成されたコンストラクター・スタブ
 		super(x, y, 10,10 );
+		this.power=power;
 		//ベクトル設定
 		//xVector =length * Math.cos(Math.toRadians(deg));
 	//	yVector =length * length * Math.cos(Math.toRadians(deg));

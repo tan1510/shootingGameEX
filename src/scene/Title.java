@@ -1,3 +1,4 @@
+package scene;
 import densan.s.game.drawing.Drawer;
 import densan.s.game.manager.Updatable;
 

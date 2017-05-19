@@ -1,3 +1,7 @@
+package scene;
+
+
+import java.awt.Color;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -24,7 +28,7 @@ public class Game implements Updatable {
 /**
  * プレイヤーオブジェクト
  */
-	private Player player;
+	private Player player = Player.getInstance();
 	/**
 	 * balletManagerのフィールド
 	 */
@@ -52,13 +56,14 @@ public class Game implements Updatable {
 	/**
 	 * BGMプレイヤー
 	 */
-	private BGM bgm;
+	private static boolean isGameOver = false;
+//	private BGM bgm;
 	
 	/**
 	 * コンストラクタ
 	 */
-	public Game(){
-		player=Player.getInstance();
+	public Game(int stageNum){
+		player.start();
 		balletManager_p = PlayerBalletManager.getInstance();
 		balletManager_e = EnemyBalletManager.getInstance();
 		enemyManager = EnemyManager.getInstance();
@@ -91,7 +96,9 @@ public class Game implements Updatable {
 	public void update() {
 		// TODO 自動生成されたメソッド・スタブ
 		//t++;
+		if(!isGameOver){
 		player.update();
+		}
 		balletManager_p.update();
 		balletManager_e.update();
 		enemyManager.update();
@@ -99,7 +106,7 @@ public class Game implements Updatable {
 		
 	}
 /**
- * privateメソッド　このメソッドはEnemyManagerに実装を移動することを要検討
+ * privateメソッド　このメソッドはEnemyManagerに実装を移動することを要検討<br>
  * 使用不可
  * @param time
  */
@@ -118,6 +125,27 @@ public class Game implements Updatable {
 		balletManager_p.draw(d);
 		balletManager_e.draw(d);
 		enemyManager.draw(d);
+		if(isGameOver){
+			isGameOverDraw(d);
+		}
+	}
+	/**
+	 * ゲームオーバーフラグをtrueにする
+	 */
+	public static void isGameOver(){
+		isGameOver = true;
+	}
+	/**
+	 * ゲームオーバーフラグがtrueの時にdrawメソッドで呼び出す描画メソッド
+	 * @param d
+	 */
+	private void isGameOverDraw(Drawer d){
+		d.setFontSize(30);
+		d.setColor(Color.RED);
+		d.drawStringCenter("GAMEOVER", 200, 400);
+		d.setFontSize(10);
+		d.setColor(Color.BLACK);
+		d.drawString("", x, y);
 	}
 
 }

@@ -34,8 +34,8 @@ public class StraightShoot implements ShootAction{
 	 * @param deg 
 	 */
 	@Override
-	public void shoot() {
-				balletManager.balletAdd(new StraightBallet(o.getCenterX(),o.getCenterY()));	
+	public void shoot(int damage) {
+				balletManager.balletAdd(new StraightBallet(o.getCenterX(),o.getCenterY(),damage));	
 	}
 	@Override
 	public int getWaitTime() {

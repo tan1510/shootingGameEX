@@ -20,13 +20,13 @@ import densan.s.game.drawing.Drawer;
  * @param <T>
  * @param <Cloud>
  */
-public class EnemyGeneretor1 implements StageConstoracter{
+public class TestGeneretor implements StageConstoracter{
 	/**
 	 * エネミーマネージャーへの参照
 	 */
 	private List<Enemy> manager = EnemyManager.getInstance().getList();
 	
-	public EnemyGeneretor1(){
+	public TestGeneretor(){
 	}
 	/**
 	 * update 引数込みで　使用しない

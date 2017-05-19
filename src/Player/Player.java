@@ -3,37 +3,58 @@ import java.awt.Color;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
 
+import scene.GameOverScene;
 import shootAction.ShootAction;
 import shootAction.StraightShoot;
 import densan.s.game.drawing.Drawer;
 import densan.s.game.image.ImageLoader;
 import densan.s.game.input.KeyInput;
+import densan.s.game.manager.GameManager;
 import densan.s.game.object.GameObjectBase;
  
  /**
-  * プレイヤーのオブジェクト
+  * プレイヤーのオブジェクト<br>
+  * ゲーム開始時にstartメソッドを実行すること<br>
   * @author tachibana
   *
   */
 public class Player extends GameObjectBase {
- /**
-  * 移動スピード(初期値2)
-  */
+	/**
+	 * 所持金(テストとして99999初期値)
+	 */
+	private int money = 99999;
+	/**
+	 * ステージでゲットしたお金を保持するフィールド
+	 */
+	private int dropmoney = 0;
+	/**
+	 * 攻撃力　初期値1 <br>
+	 * ショップでの強化での値は仕様書参照のこと
+	 */
+	private int power = 1;
+	/**
+	 * 移動スピード(初期値2)<br>
+	 * ショップでの強化での値は仕様書参照のこと
+	 */	
 	private int SPEED = 2;
 	/**
-	 * 初期の残機数(初期値3)
+	 * 初期の残機数(初期値3)<br>
+	 * ショップでの強化での値は仕様書参照のこと
 	 */
 	private int MAX_LIFE = 3; 
 	/**
-	 * 現在の残機(初期値1)
+	 * 現在の残機 <br>
+	 * とりあえず初期値としては1突っ込んでおき.startメソッドでMAXLIFEを代入
 	 */
 	private int LIFE = 1;
 	/**
-	 * playerの横サイズ(50)
+	 * playerの横サイズ(初期値 50)<br>
+	 * ショップでの強化での値は仕様書参照のこと
 	 */
 	private static int width =50;
 	/**
-	 * playerの縦サイズ(25)
+	 * playerの縦サイズ(初期値 25)<br>
+	 * ショップでの強化での値は仕様書参照のこと
 	 */
 	private static int height = 25;
 	/**
@@ -41,9 +62,13 @@ public class Player extends GameObjectBase {
 	 */
 	private ShootAction shootAction = new StraightShoot(this);
 	/**
-	 * Playerのイメージ
+	 * Playerのイメージ クラスが呼ばれた際に参照を保持
 	 */
-	private static final Image image = ImageLoader.load("image/紙飛行機.png");
+	private static final Image image = ImageLoader.load("image/paperfly.png");
+	/**
+	 * 
+	 */
+	private static final Image isDamegedImage = ImageLoader.load("");
 	/**
 	 * 無敵フラグ
 	 */
@@ -53,6 +78,10 @@ public class Player extends GameObjectBase {
 	 * <br>クラスを読み込んだ時に初期化
 	 */
 	private static Player player  = new Player();
+	/**
+	 * 
+	 */
+	private Drawer lastD;
 	/**
 	 * getInsatance
 	 * @return
@@ -88,24 +117,24 @@ public class Player extends GameObjectBase {
 	public void update() {
 		//移動
 		if (KeyInput.isPressing(KeyEvent.VK_UP)) {
-			addY(-SPEED);
+			addY(-getSPEED());
 		}
 		if (KeyInput.isPressing(KeyEvent.VK_DOWN)) {
-			addY(SPEED);
+			addY(getSPEED());
 		}
 		if (KeyInput.isPressing(KeyEvent.VK_RIGHT)) {
-			addX(SPEED);
+			addX(getSPEED());
 		}
 		if (KeyInput.isPressing(KeyEvent.VK_LEFT)) {
-			addX(-SPEED);
+			addX(-getSPEED());
 		}
 		if(KeyInput.isPressing(KeyEvent.VK_Z)){
-			if(waitTime>shootAction.getWaitTime()){
-			shootAction.shoot(); //射撃
+			if(waitTime>getShootAction().getWaitTime()){
+			getShootAction().shoot(power); //射撃
 			waitTime=0;
 			}
-			waitTime++;
 		}
+			waitTime++;
 		
 		//60fで無敵解除
 		if(invinsible){
@@ -126,6 +155,17 @@ public class Player extends GameObjectBase {
 			System.out.println("im");
 			invinsible = true;
 		}
+		if(LIFE==0){
+			gameOver();
+		}
+	}
+	/**
+	 * ゲームオーバー
+	 */
+	public void gameOver(){
+		player.setX(1000);
+		player.setY(1000);
+		GameManager.getInstance().setUpdatable(new GameOverScene(lastD));
 	}
  
 	
@@ -139,17 +179,71 @@ public class Player extends GameObjectBase {
 			d.setColor(Color.BLUE);
 			d.fillRect(getX(), getY(), getWidth(), getHeight());
 		}else
-		d.drawImage(image, getX(), getY());
-//		d.setColor(Color.BLUE);
-//		d.fillRect(getX(), getY(), getWidth(), getHeight());
-		
+		d.drawImage(image, (int)getX(), (int)getY(),getWidth(),getHeight());
+
+		lastD = d;
 // 
 	}
 	/**
 	 * 射撃タイプのStateを返す
 	 */
 	public ShootAction getShoottype(){
+		return getShootAction();
+	}
+ /**
+  * ステージの開始時に呼び、プレイヤーのライフと座標などの初期化を行う
+  */
+	public void start(){
+		setX(100);
+		setY(220);
+		LIFE=getMAX_LIFE();
+	}
+	
+	public int getPower(){
+		return power;
+	}
+	
+	public void setPower(int power){
+		this.power=power;
+	}
+
+	public int getSPEED() {
+		return SPEED;
+	}
+
+	public void setSPEED(int sPEED) {
+		SPEED = sPEED;
+	}
+
+	public int getMAX_LIFE() {
+		return MAX_LIFE;
+	}
+
+	public void setMAX_LIFE(int mAX_LIFE) {
+		MAX_LIFE = mAX_LIFE;
+	}
+
+	public ShootAction getShootAction() {
 		return shootAction;
 	}
- 
+
+	public void setShootAction(ShootAction shootAction) {
+		this.shootAction = shootAction;
+	}
+
+	public int getMoney() {
+		return money;
+	}
+
+	public void setMoney(int money) {
+		this.money = money;
+	}
+
+	public int getDropmoney() {
+		return dropmoney;
+	}
+
+	public void setDropmoney(int dropmoney) {
+		this.dropmoney = dropmoney;
+	}
 }
