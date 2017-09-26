@@ -185,7 +185,7 @@ public class Shop implements Updatable{
 		case 1:
 			if(p.getMoney()>=POWERUPCOST_FIRST){
 				p.setPower(2);
-				p.setMoney(p.getMoney()-POWERUPCOST_FIRST);
+				p.addMoney(-POWERUPCOST_FIRST);
 			}else{
 				buyfailed=true;
 			}
@@ -193,7 +193,7 @@ public class Shop implements Updatable{
 		case 2:
 			if(p.getMoney()>=POWERUPCOST_SECOND){
 				p.setPower(3);
-				p.setMoney(p.getMoney()-POWERUPCOST_SECOND);
+				p.addMoney(-POWERUPCOST_SECOND);
 			}else{
 				buyfailed=true;
 			}
@@ -201,7 +201,7 @@ public class Shop implements Updatable{
 		case 3:
 			if(p.getMoney()>=POWERUPCOST_THIRD){
 				p.setPower(5);
-				p.setMoney(p.getMoney()-POWERUPCOST_THIRD);
+				p.addMoney(-POWERUPCOST_THIRD);
 			}else{
 				buyfailed=true;
 			}

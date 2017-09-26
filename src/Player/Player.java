@@ -3,9 +3,13 @@ import java.awt.Color;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
 
+import Ballet.PlayerSetRadBallet;
+import scene.Game;
 import scene.GameOverScene;
 import shootAction.ShootAction;
 import shootAction.StraightShoot;
+import shootAction.ThreeWayShoot;
+import shootAction.TwoWayShoot;
 import densan.s.game.drawing.Drawer;
 import densan.s.game.image.ImageLoader;
 import densan.s.game.input.KeyInput;
@@ -22,11 +26,11 @@ public class Player extends GameObjectBase {
 	/**
 	 * 所持金(テストとして99999初期値)
 	 */
-	private int money = 99999;
+	private int money = 5000;
 	/**
 	 * ステージでゲットしたお金を保持するフィールド
 	 */
-	private int dropmoney = 0;
+	private static int dropmoney = 0;
 	/**
 	 * 攻撃力　初期値1 <br>
 	 * ショップでの強化での値は仕様書参照のこと
@@ -46,7 +50,7 @@ public class Player extends GameObjectBase {
 	 * 現在の残機 <br>
 	 * とりあえず初期値としては1突っ込んでおき.startメソッドでMAXLIFEを代入
 	 */
-	private int LIFE = 1;
+	private static int LIFE = 1;
 	/**
 	 * playerの横サイズ(初期値 50)<br>
 	 * ショップでの強化での値は仕様書参照のこと
@@ -66,9 +70,13 @@ public class Player extends GameObjectBase {
 	 */
 	private static final Image image = ImageLoader.load("image/paperfly.png");
 	/**
-	 * 
+	 * ダメージを受けた際に表示するイメージ
 	 */
 	private static final Image isDamegedImage = ImageLoader.load("");
+	/**
+	 * 
+	 */
+	private static final Image STATU_VAR = ImageLoader.load("image/statusVAR.png"); 
 	/**
 	 * 無敵フラグ
 	 */
@@ -106,6 +114,7 @@ public class Player extends GameObjectBase {
 	 * 無敵時間のカウント
 	 */
 	private int invisibleCount = 0;
+	private boolean isGameover = false;
 
  /**
   * update
@@ -136,10 +145,10 @@ public class Player extends GameObjectBase {
 		}
 			waitTime++;
 		
-		//60fで無敵解除
+		//120fで無敵解除
 		if(invinsible){
 			invisibleCount++;
-			if(invisibleCount>30){
+			if(invisibleCount>120){
 				//無敵関係の数値を初期化
 				invinsible= false;
 				invisibleCount = 0;
@@ -156,15 +165,15 @@ public class Player extends GameObjectBase {
 			invinsible = true;
 		}
 		if(LIFE==0){
-			gameOver();
+			isGameover  = true;
+			Game.isGameOver();
 		}
 	}
 	/**
-	 * ゲームオーバー
+	 * ゲームオーバー  
+	 * 仕様していない
 	 */
 	public void gameOver(){
-		player.setX(1000);
-		player.setY(1000);
 		GameManager.getInstance().setUpdatable(new GameOverScene(lastD));
 	}
  
@@ -175,15 +184,29 @@ public class Player extends GameObjectBase {
 	 * @param d
 	 */
 	public void draw(Drawer d) {
+		if(!isGameover){
 		if(invinsible){
 			d.setColor(Color.BLUE);
 			d.fillRect(getX(), getY(), getWidth(), getHeight());
-		}else
+		}else {
 		d.drawImage(image, (int)getX(), (int)getY(),getWidth(),getHeight());
 
 		lastD = d;
-// 
+		}
+		}
 	}
+	/**
+	 * ステータスの描画
+	 */
+	public static void drawStatus(Drawer d){
+		d.drawScaleImage(STATU_VAR, 30, 430, 2.5);
+		d.setFontSize(30);
+		d.setColor(Color.BLACK);
+		d.drawString("LIFE ",45, 470);
+		d.setColor(Color.RED);
+		d.drawString(String.valueOf(LIFE), 145, 470);
+	}
+	
 	/**
 	 * 射撃タイプのStateを返す
 	 */
@@ -197,6 +220,8 @@ public class Player extends GameObjectBase {
 		setX(100);
 		setY(220);
 		LIFE=getMAX_LIFE();
+		dropmoney = 0;
+		isGameover=false;
 	}
 	
 	public int getPower(){
@@ -235,15 +260,15 @@ public class Player extends GameObjectBase {
 		return money;
 	}
 
-	public void setMoney(int money) {
-		this.money = money;
+	public void addMoney(int money) {
+		this.money += money;
 	}
 
-	public int getDropmoney() {
+	public static int getDropmoney() {
 		return dropmoney;
 	}
 
-	public void setDropmoney(int dropmoney) {
-		this.dropmoney = dropmoney;
+	public static void addDropmoney(int money) {
+		dropmoney += money;
 	}
 }

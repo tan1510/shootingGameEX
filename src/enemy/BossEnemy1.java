@@ -15,6 +15,7 @@ import densan.s.game.calc.Calc;
 import densan.s.game.drawing.Drawer;
 import densan.s.game.image.ImageLoader;
 import densan.s.game.object.GameRectBase;
+import scene.Game;
 /**
  * stage1のボス
  * @author tachibana
@@ -40,9 +41,13 @@ public class BossEnemy1 extends Enemy {
 	 */
 	private final static int MAX_HP = 40;
 	/**
-	 * 
+	 * 現在HP
 	 */
 	private int hp;
+	/**
+	 * 撃破時に得られる金額
+	 */
+	private final static int DROPMONEY = 500;
 	/**
 	 * 
 	 */
@@ -101,9 +106,12 @@ public class BossEnemy1 extends Enemy {
 		hp-= damage;
 		if(hp<0){
 			//ここにボス撃破時の処理
-			isRemove();
+			Player.addDropmoney(DROPMONEY);
+			Game.isCleared();
+			
+			remove();
 		}
-		System.out.println(hp);
+		
 	}
 	
 	private int count = 0;

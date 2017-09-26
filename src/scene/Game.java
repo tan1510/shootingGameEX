@@ -2,19 +2,25 @@ package scene;
 
 
 import java.awt.Color;
+import java.awt.RenderingHints.Key;
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-
+import Ballet.Ballet;
 import Ballet.EnemyBalletManager;
 import Ballet.PlayerBalletManager;
 import Player.Player;
 import densan.s.game.drawing.Drawer;
+import densan.s.game.input.KeyInput;
+import densan.s.game.manager.GameManager;
 import densan.s.game.manager.Updatable;
 import enemy.Enemy;
+import enemy.StageConstrcter2;
 import enemy.StageConstoracter;
-import enemy.EnemyGeneretor1;
+import enemy.StageConstoracter1;
+import enemy.StageConstoracter3;
 //import enemy.EnemyGeneretorByTime;
 import enemy.EnemyManager;
 
@@ -53,28 +59,37 @@ public class Game implements Updatable {
 	 * ステージナンバーを保持
 	 */
 	private int stageNum=1;
-	/**
-	 * BGMプレイヤー
-	 */
+/**
+ * ゲームオーバーフラグ
+ * 
+ */
 	private static boolean isGameOver = false;
 //	private BGM bgm;
-	
+	/**
+	 * 
+	 */
+	private static boolean isCleared = false;
 	/**
 	 * コンストラクタ
 	 */
 	public Game(int stageNum){
+		isCleared = false;
+		isGameOver= false;
 		player.start();
 		balletManager_p = PlayerBalletManager.getInstance();
 		balletManager_e = EnemyBalletManager.getInstance();
 		enemyManager = EnemyManager.getInstance();
 		switch(stageNum){
 			case 1:
-		eg = new EnemyGeneretor1();
-		//未実装
-		/*
-		bgm = new BGM();
-		bgm.play();
-		*/
+				eg = new StageConstoracter1();
+				break;
+			case 2:
+				eg = new StageConstrcter2();
+				break;
+			case 3:
+				eg = new StageConstoracter3();
+				break;
+				
 			default:
 				System.err.println("ステージ未選択");
 		}
@@ -98,11 +113,27 @@ public class Game implements Updatable {
 		//t++;
 		if(!isGameOver){
 		player.update();
+		}else{
+			Iterator<Enemy> itr = enemyManager.getList().iterator();
+					while(itr.hasNext()){
+						Enemy e = itr.next();
+						e.remove();
+					}
+			if(KeyInput.isPress(KeyEvent.VK_X)){
+				GameManager.getInstance().setUpdatable(new Menu());
+			}
+		}
+		if(isCleared){
+			balletManager_e.deleteAllBallet();
+			if(KeyInput.isPress(KeyEvent.VK_X)){
+				GameManager.getInstance().setUpdatable(new Menu());
+			}
 		}
 		balletManager_p.update();
 		balletManager_e.update();
 		enemyManager.update();
 		eg.update();
+		
 		
 	}
 /**
@@ -125,27 +156,58 @@ public class Game implements Updatable {
 		balletManager_p.draw(d);
 		balletManager_e.draw(d);
 		enemyManager.draw(d);
+		player.drawStatus(d);
 		if(isGameOver){
 			isGameOverDraw(d);
+		}else if(isCleared){
+			isClearDraw(d);
 		}
+		
 	}
 	/**
 	 * ゲームオーバーフラグをtrueにする
 	 */
 	public static void isGameOver(){
+		Player.getInstance().addMoney(Player.getDropmoney()/3);
+		System.out.println(Player.getInstance().getMoney());
 		isGameOver = true;
+	}
+	/**
+	 * クリアフラグをtrueにする
+	 */
+	public static void isCleared(){
+		Player.getInstance().addMoney(Player.getDropmoney());
+		isCleared =true;
 	}
 	/**
 	 * ゲームオーバーフラグがtrueの時にdrawメソッドで呼び出す描画メソッド
 	 * @param d
 	 */
 	private void isGameOverDraw(Drawer d){
-		d.setFontSize(30);
+		d.setFontSize(40);
 		d.setColor(Color.RED);
-		d.drawStringCenter("GAMEOVER", 200, 400);
-		d.setFontSize(10);
+		d.drawStringCenter("GAMEOVER", 340, 200);
+		d.setFontSize(20);
 		d.setColor(Color.BLACK);
-		d.drawString("", x, y);
+		d.drawString(Player.getDropmoney()/3+" G を獲得しました", 390, 250);
+		d.drawString("PLEASE PUSH X", 410, 270);
 	}
+	
+	/**
+	 * Clearフラグがtrueの時にdrawメソッドで呼び出す描画メソッド
+	 * @param d
+	 */
+	private void isClearDraw(Drawer d){
+		d.setFontSize(40);
+		d.setColor(Color.RED);
+		d.drawStringCenter("STAGECLEAR", 340, 200);
+		d.setFontSize(20);
+		d.setColor(Color.BLACK);
+		d.drawString(Player.getDropmoney()+" G を獲得しました", 390, 250);
+		d.drawString("PLEASE PUSH X", 410, 270);
+	}
+	/**
+	 * 
+	 */
 
 }

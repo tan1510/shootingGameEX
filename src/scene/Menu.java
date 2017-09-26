@@ -1,7 +1,9 @@
 package scene;
+import java.awt.Color;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
 
+import Player.Player;
 import densan.s.game.drawing.Drawer;
 import densan.s.game.image.ImageLoader;
 import densan.s.game.input.KeyInput;
@@ -73,7 +75,7 @@ public class Menu implements Updatable{
 		// TODO 自動生成されたメソッド・スタブ
 	
 		d.setFontSize(10);
-		
+		d.setColor(Color.BLACK);
 		d.drawImage(BACKGROUND, 0, 0);
 		d.drawRotationImage(ROGO, 100, 200, time*0.01);
 		time ++;
@@ -84,6 +86,13 @@ public class Menu implements Updatable{
 		d.drawString("zキーで決定",50,150);
 		
 		d.drawString(String.valueOf(state), 160, 160);
+		
+		d.setColor(Color.WHITE);
+		d.setFontSize(15);
+		d.drawString("xキー :　キャンセル     zキー　: 　決定      矢印キー : 選択", 100, 460);
+		
+		d.drawString(Player.getInstance().getMoney()+" G", 400, 400);
+		
 		
 	}
 

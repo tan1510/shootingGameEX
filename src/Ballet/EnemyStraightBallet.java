@@ -1,6 +1,7 @@
 package Ballet;
 
 import java.awt.Color;
+import java.util.Random;
 
 import Player.Player;
 import densan.s.game.calc.Calc;
@@ -22,6 +23,8 @@ public class EnemyStraightBallet extends Ballet {
 	 * 弾の速度
 	 */
 	private static final int SPEED = 5;
+	
+	Color color = Color.BLUE;
 /**
  * 
  * @param x
@@ -46,8 +49,12 @@ public class EnemyStraightBallet extends Ballet {
 		d.setColor(Color.BLUE);
 		d.fillCircle(this.getX(), this.getY(),RENGE);
 		
+		
 	}
 
+	public void setColor(Color c){
+		color= c;
+	}
 	@Override
 	public void update() {
 		// TODO 自動生成されたメソッド・スタブ

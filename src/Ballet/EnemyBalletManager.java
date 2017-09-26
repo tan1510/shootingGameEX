@@ -90,6 +90,13 @@ public class EnemyBalletManager <T extends Ballet>{
 			return balletlist;
 			
 		}
+		public static void deleteAllBallet(){
+			Iterator<Ballet> itr = balletlist.iterator();
+					while(itr.hasNext()){
+						itr.next();
+						itr.remove();
+					}
+		}
 		
 		
 	}

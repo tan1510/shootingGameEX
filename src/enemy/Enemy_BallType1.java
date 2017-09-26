@@ -8,6 +8,7 @@ import Ballet.Ballet;
 import Ballet.EnemyBalletManager;
 import Ballet.EnemyStraightBallet;
 import Ballet.PlayerBalletManager;
+import Player.Player;
 /**
  * ボール型の敵
  * @author tachibana
@@ -19,7 +20,11 @@ public class Enemy_BallType1 extends Enemy{
 	/**
 	 * この敵の直径
 	 */
-	private static final int LENGTH=40;//直径であるので注意
+	private static final int LENGTH=45;//直径であるので注意
+	/**
+	 * 
+	 */
+	private static final int DROPMONEY = 50;
 	
 	private ArrayList<Ballet> list = EnemyBalletManager.getInstance().getList();
 	/**
@@ -37,6 +42,7 @@ public class Enemy_BallType1 extends Enemy{
 		HP-=damage;
 		System.out.println("dameged");
 		if(HP<0){
+			Player.addDropmoney(DROPMONEY);
 		this.remove();//aliveフラグをfalseにす
 		}
 	}
@@ -46,7 +52,7 @@ public class Enemy_BallType1 extends Enemy{
 	public void update() {
 		// TODO 自動生成されたメソッド・スタブ
 		move();
-		if(time> 15){
+		if(time> 40){
 			shoot();
 			time=0;
 		}
@@ -61,7 +67,7 @@ public class Enemy_BallType1 extends Enemy{
 	public void draw(Drawer d) {
 		// TODO 自動生成されたメソッド・スタブ
 		d.setColor(Color.BLACK);
-		d.fillCircle(this.getX(), this.getY(),20);
+		d.fillCircle(this.getCenterX(), this.getCenterY(),20);
 	}
 	
 }

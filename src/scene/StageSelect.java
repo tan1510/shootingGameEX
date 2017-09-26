@@ -53,7 +53,7 @@ public class StageSelect implements Updatable {
 					state-=3;
 				}
 			}else if(KeyInput.isPress(KeyEvent.VK_Z)){	
-				if(state==1||state==2){		
+				if(state==1||state==2||state==3){		
 					isSelecting=true;
 				}
 			}else if(KeyInput.isPress(KeyEvent.VK_X)){
@@ -72,7 +72,7 @@ public class StageSelect implements Updatable {
 					decisive=false;
 					isSelecting=false;
 				}else if(KeyInput.isPress(KeyEvent.VK_LEFT)){
-					isSelecting= false;
+					decisive= false;
 				}
 				
 			}else {//意思決定時　キャンセル時の処理
@@ -96,7 +96,7 @@ public class StageSelect implements Updatable {
 		//操作指示
 		d.setColor(Color.WHITE);
 		d.setFontSize(15);
-		d.drawString("xキー :　キャンセル   z　:　キー決定   矢印キー : 選択", 100, 460);
+		d.drawString("xキー :　キャンセル     z　:　キー決定      矢印キー : 選択", 100, 460);
 		
 		//ポインターの描画
 		drawSelectPointer(d);

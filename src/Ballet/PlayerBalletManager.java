@@ -40,7 +40,7 @@ public class PlayerBalletManager <T extends Ballet>{
 	 * リストにバレットを追加
 	 * @param addBallet
 	 */
-	public void balletAdd(StraightBallet addBallet){
+	public void balletAdd(Ballet addBallet){
 		balletlist.add(addBallet);
 	}
 	/**

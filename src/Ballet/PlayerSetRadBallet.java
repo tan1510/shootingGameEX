@@ -1,17 +1,11 @@
 package Ballet;
-import java.awt.Color;
+
 import java.awt.Image;
 
 import densan.s.game.drawing.Drawer;
 import densan.s.game.image.ImageLoader;
-import densan.s.game.object.GameObjectBase;
 
-/**
- * 弾のクラス
- * @author tachibana
- *
- */
-public class StraightBallet extends Ballet {
+public class PlayerSetRadBallet extends Ballet {
 
 	/**
 	 * xベクトル とりあえず初期値10
@@ -29,7 +23,7 @@ public class StraightBallet extends Ballet {
 	 * 弾の威力 
 	 */
 	private int power = 1;
-	
+	private int length =20;
 	private final static Image image = ImageLoader.load("image/ballet1.png");
 	/**
 	 * 弾コンストラクタ
@@ -38,14 +32,17 @@ public class StraightBallet extends Ballet {
 	 * @param length 半径
 	 * @param deg  角度
 	 */
-	public StraightBallet(double x, double y,int power) {
+	public PlayerSetRadBallet(double x, double y,int power,double rad) {
 		// TODO 自動生成されたコンストラクター・スタブ
-		super(x, y-10, 10,10 );
+		super(x, y, 10,10 );
 		this.power=power;
 		//ベクトル設定
-		//xVector =length * Math.cos(Math.toRadians(deg));
-	//	yVector =length * length * Math.cos(Math.toRadians(deg));
-		this.setVector(20, 0);
+		xVector =length * Math.sin(rad);
+		yVector =length * Math.cos(rad);
+
+		System.out.println("x:"+xVector);
+		System.out.println("y:"+yVector);
+		this.setVector(xVector, yVector);
 	}
 
 	@Override
@@ -59,7 +56,7 @@ public class StraightBallet extends Ballet {
 	@Override
 	public void draw(Drawer d) {
 		// TODO 自動生成されたメソッド・スタブ
-		d.drawImage(image, getX(), getY());
+		d.drawImage(image, getX()-5, getY()-5);
 	//	d.setColor(Color.BLACK);
 		//d.fillCircle(this.getX(), this.getY(),2);
 	}

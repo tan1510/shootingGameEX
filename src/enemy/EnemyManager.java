@@ -11,6 +11,7 @@ import java.util.List;
 import Ballet.Ballet;
 import Ballet.PlayerBalletManager;
 import Ballet.StraightBallet;
+import Player.Player;
 import densan.s.game.drawing.Drawer;
 import densan.s.game.object.GameObjectBase;
 
@@ -76,6 +77,10 @@ public class EnemyManager <T extends Enemy>{
 		while(itr.hasNext()){
 			e = itr.next();
 			e.update();
+			
+			if(Calc.collisionDetection(e,Player.getInstance())){
+				Player.getInstance().damage();
+			}
 			
 			if(e.getMaxX()<0)
 				e.remove();

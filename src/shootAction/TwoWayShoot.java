@@ -1,18 +1,15 @@
 package shootAction;
-import Ballet.StraightBallet;
+
 import Ballet.PlayerBalletManager;
+import Ballet.PlayerSetRadBallet;
+import Ballet.StraightBallet;
 import densan.s.game.object.GameObjectBase;
 
-/**
- * 射撃の仕方の一つ
- * @author tachibana
- *
- */
-public class StraightShoot implements ShootAction{
+public class TwoWayShoot implements ShootAction{
 	/**
 	 * 次弾発射までのインターバル
 	 */
-	private static final int waitTime = 20; 
+	private static final int waitTime = 30; 
 	
 	/**
 	 * ShootActionをもつGameObjectへのアクセス
@@ -23,7 +20,10 @@ public class StraightShoot implements ShootAction{
 	 */
 	private PlayerBalletManager balletManager;
 	
-	public StraightShoot(GameObjectBase o){
+	private double rad1 = Math.PI/10.0;
+	private double rad2 = Math.PI/10.0*11.0;
+	
+	public TwoWayShoot(GameObjectBase o){
 		this.o=o;
 		balletManager=PlayerBalletManager.getInstance();
 		
@@ -35,8 +35,13 @@ public class StraightShoot implements ShootAction{
 	 */
 	@Override
 	public void shoot(int damage) {
+		System.out.println(rad1);
 				balletManager.balletAdd(new StraightBallet(o.getCenterX(),o.getCenterY(),damage));	
+				//balletManager.balletAdd(new PlayerSetRadBallet(o.getCenterX(), o.getCenterY(), damage,rad1));
+				balletManager.balletAdd(new PlayerSetRadBallet(o.getCenterX(), o.getCenterY(), damage,-rad2));
 	}
+	
+	
 	@Override
 	public int getWaitTime() {
 		// TODO 自動生成されたメソッド・スタブ
